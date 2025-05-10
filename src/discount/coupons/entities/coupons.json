@@ -1,0 +1,32 @@
+[
+  {
+    "code": "SAVE10BATH",
+    "strategy": "FIXED",
+    "amount": 10
+  },
+  {
+    "code": "SAVE20BATH",
+    "strategy": "FIXED",
+    "amount": 20
+  },
+  {
+    "code": "SAVE50BATH",
+    "strategy": "FIXED",
+    "amount": 50
+  },
+  {
+    "code": "SAVE10PERCENT",
+    "strategy": "PERCENTAGE",
+    "amount": 10
+  },
+  {
+    "code": "SAVE20PERCENT",
+    "strategy": "PERCENTAGE",
+    "amount": 20
+  },
+  {
+    "code": "SAVE50PERCENT",
+    "strategy": "PERCENTAGE",
+    "amount": 50
+  }
+]
