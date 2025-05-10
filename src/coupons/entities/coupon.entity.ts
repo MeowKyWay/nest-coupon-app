@@ -6,7 +6,7 @@ export enum CouponType {
   SEASONAL = 'SEASONAL',
 }
 
-export enum CouponStrategy {
+export enum CouponCampaign {
   PERCENTAGE = 'PERCENTAGE',
   FIXED = 'FIXED',
   CATEGORY = 'CATEGORY',
@@ -17,10 +17,9 @@ export enum CouponStrategy {
 export interface CouponJson {
   code: string;
   type: CouponType;
-  strategy: CouponStrategy;
+  campaign: CouponCampaign;
   percentage?: number;
   amount?: number;
-  // Add other optional fields as needed for future strategies
 }
 
 export abstract class Coupon {
@@ -36,13 +35,13 @@ export abstract class Coupon {
 
   static fromJson(json: CouponJson): Coupon {
     console.log(json);
-    switch (json.strategy) {
-      case CouponStrategy.FIXED:
+    switch (json.campaign) {
+      case CouponCampaign.FIXED:
         return new FixedAmountCoupon(json);
-      case CouponStrategy.PERCENTAGE:
+      case CouponCampaign.PERCENTAGE:
         return new PercentageCoupon(json);
       default:
-        throw new Error(`Unknown coupon strategy: ${json.strategy}`);
+        throw new Error(`Unknown coupon strategy: ${json.campaign}`);
     }
   }
 }

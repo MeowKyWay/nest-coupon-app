@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "Shirt",
+    "price": 200,
+    "category": "CLOTHING"
+  },
+  {
+    "id": 2,
+    "name": "Pants",
+    "price": 300,
+    "category": "CLOTHING"
+  },
+  {
+    "id": 3,
+    "name": "Pizza",
+    "price": 100,
+    "category": "FOOD"
+  },
+  {
+    "id": 4,
+    "name": "Steak",
+    "price": 150,
+    "category": "FOOD"
+  },
+  {
+    "id": 5,
+    "name": "Chair",
+    "price": 500,
+    "category": "FURNITURE"
+  },
+  {
+    "id": 6,
+    "name": "Table",
+    "price": 700,
+    "category": "FURNITURE"
+  }
+]
