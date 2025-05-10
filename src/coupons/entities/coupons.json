@@ -1,0 +1,38 @@
+[
+  {
+    "strategy": "FIXED",
+    "code": "SAVE10BATH",
+    "type": "COUPON",
+    "amount": 10
+  },
+  {
+    "strategy": "FIXED",
+    "code": "SAVE10BATHONTOP",
+    "type": "ON_TOP",
+    "amount": 10
+  },
+  {
+    "strategy": "FIXED",
+    "code": "SAVE10BATHSEASONAL",
+    "type": "SEASONAL",
+    "amount": 10
+  },
+  {
+    "strategy": "PERCENTAGE",
+    "code": "SAVE10PERCENT",
+    "type": "COUPON",
+    "percentage": 10
+  },
+  {
+    "strategy": "PERCENTAGE",
+    "code": "SAVE20PERCENTONTOP",
+    "type": "ON_TOP",
+    "percentage": 10
+  },
+  {
+    "strategy": "PERCENTAGE",
+    "code": "SAVE10PERCENTSEASONAL",
+    "type": "SEASONAL",
+    "percentage": 10
+  }
+]
