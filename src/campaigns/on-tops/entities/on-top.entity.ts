@@ -1,4 +1,7 @@
-import { Campaign } from 'src/campaigns/entities/campaign';
+import {
+  applyProportionalDiscount,
+  Campaign,
+} from 'src/campaigns/entities/campaign';
 import * as json from './on-tops.json';
 import { Item, ItemCategory } from 'src/items/entities/item.entity';
 
@@ -8,6 +11,7 @@ export enum OnTopStrategy {
 }
 
 export interface OnTopJson {
+  id: string;
   strategy: OnTopStrategy;
   amount?: number;
   category?: ItemCategory;
@@ -15,8 +19,8 @@ export interface OnTopJson {
 }
 
 export abstract class OnTop extends Campaign {
-  constructor(name: string) {
-    super(name);
+  constructor(name: string, id: string) {
+    super(name, id);
   }
 
   static fromJson(json: OnTopJson): OnTop {
@@ -37,9 +41,11 @@ export class CategoryPercentageOnTop extends OnTop {
 
   constructor({
     amount,
+    id,
     category,
   }: {
     amount?: number;
+    id: string;
     category?: ItemCategory;
   }) {
     amount = amount ?? 0;
@@ -49,7 +55,7 @@ export class CategoryPercentageOnTop extends OnTop {
     if (!category) {
       throw new Error('Category is required');
     }
-    super('Percentage discount by item category');
+    super('Percentage discount by item category', id);
     this.amount = amount;
     this.category = category;
   }
@@ -62,9 +68,6 @@ export class CategoryPercentageOnTop extends OnTop {
    * @returns A new list of items with updated (discounted) prices.
    */
   discount({ items }: { items: Item[] }): Item[] {
-    console.log(
-      `Applying ${this.amount}% discount on items in category ${this.category}`,
-    );
     return items.map((item) => {
       if (item.category === this.category) {
         const discountAmount = (item.price * this.amount) / 100;
@@ -82,9 +85,9 @@ export class CategoryPercentageOnTop extends OnTop {
 export class PointsOnTop extends OnTop {
   public readonly point: number;
 
-  constructor({ points }: { points?: number }) {
+  constructor({ points, id }: { points?: number; id: string }) {
     points = points ?? 0;
-    super('Discount by points');
+    super('Discount by points', id);
     if (points <= 0) {
       throw new Error('Point must be greater than 0');
     }
@@ -96,31 +99,18 @@ export class PointsOnTop extends OnTop {
    * The discount is distributed proportionally based on each item's price.
    *
    * @param items - The list of items to apply the discount to.
-   * @param point - The total discount amount to be distributed.
    * @returns A new list of items with updated prices.
    */
-  discount({ items, point }: { items: Item[]; point: number }): Item[] {
-    console.log(`Applying point discount of ${point} to items`);
-    if (point <= 0) {
+  discount({ items }: { items: Item[] }): Item[] {
+    if (this.point <= 0) {
       return items.map((item) => new Item({ ...item })); // No discount applied
     }
 
     const totalPrice = items.reduce((acc, item) => acc + item.price, 0);
 
-    const cappedPoint = Math.min(totalPrice * 0.2, point); // Cap the discount to 20% of total price
+    const cappedPoint = Math.min(totalPrice * 0.2, this.point); // Cap the discount to 20% of total price
 
-    if (totalPrice <= 0) {
-      return items.map((item) => new Item({ ...item, price: 0 })); // Ensure all items are zero if total price is zero
-    }
-
-    return items.map((item) => {
-      const discountAmount = (item.price / totalPrice) * cappedPoint;
-      const discountedPrice = item.price - discountAmount;
-      return new Item({
-        ...item,
-        price: Math.max(discountedPrice, 0), // Ensure price does not go below zero
-      });
-    });
+    return applyProportionalDiscount(items, cappedPoint);
   }
 }
 

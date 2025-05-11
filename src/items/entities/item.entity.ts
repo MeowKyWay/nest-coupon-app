@@ -7,6 +7,7 @@ export enum ItemCategory {
 }
 
 export interface ItemJson {
+  id: string;
   name: string;
   price: number;
   category: ItemCategory;
@@ -18,11 +19,8 @@ export class Item {
   price: number;
   category: ItemCategory;
 
-  static nextId = 1;
-
-  constructor({ name, price, category }: ItemJson) {
-    this.id = Item.nextId.toString();
-    Item.nextId += 1;
+  constructor({ name, id, price, category }: ItemJson) {
+    this.id = id;
     this.name = name;
     this.price = price;
     this.category = category;

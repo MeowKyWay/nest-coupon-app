@@ -1,14 +1,11 @@
 import { Item } from 'src/items/entities/item.entity';
 
 export abstract class Campaign {
-  private static nextId = 1;
-
   public readonly id: string;
   public readonly name: string;
 
-  constructor(name: string) {
-    this.id = Campaign.nextId.toString();
-    Campaign.nextId += 1;
+  constructor(name: string, id: string) {
+    this.id = id;
     this.name = name;
   }
 

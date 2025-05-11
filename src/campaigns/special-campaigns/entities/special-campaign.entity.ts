@@ -1,9 +1,13 @@
 import * as json from './special-campaigns.json';
 
-import { applyProportionalDiscount, Campaign } from 'src/campaigns/entities/campaign';
+import {
+  applyProportionalDiscount,
+  Campaign,
+} from 'src/campaigns/entities/campaign';
 import { Item } from 'src/items/entities/item.entity';
 
 export interface SpecialCampaignJson {
+  id: string;
   every: number;
   amount: number;
 }
@@ -12,8 +16,8 @@ export class SpecialCampaign extends Campaign {
   public readonly every: number;
   public readonly amount: number;
 
-  constructor({ every, amount }: SpecialCampaignJson) {
-    super('Special Campaign');
+  constructor({ every, id, amount }: SpecialCampaignJson) {
+    super('Special Campaign', id);
     if (every <= 0) {
       throw new Error('Every must be greater than 0');
     }

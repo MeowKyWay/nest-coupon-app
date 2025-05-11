@@ -1,13 +1,16 @@
 [
   {
+    "id": "sc1",
     "every": 300,
     "amount": 40
   },
   {
+    "id": "sc2",
     "every": 200,
     "amount": 25
   },
   {
+    "id": "sc3",
     "every": 100,
     "amount": 10
   }

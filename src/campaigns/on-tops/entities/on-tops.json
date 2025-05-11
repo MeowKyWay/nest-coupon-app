@@ -1,24 +1,29 @@
 [
   {
+    "id": "ot1",
     "strategy": "CATEGORY_PERCENTAGE",
     "category": "CLOTHING",
     "amount": 10
   },
   {
+    "id": "ot2",
     "strategy": "CATEGORY_PERCENTAGE",
     "category": "ASSESSORIES",
     "amount": 20
   },
   {
+    "id": "ot3",
     "strategy": "CATEGORY_PERCENTAGE",
     "category": "ELECTRONICS",
     "amount": 15
   },
   {
+    "id": "ot4",
     "strategy": "POINTS",
     "points": 50
   },
   {
+    "id": "ot5",
     "strategy": "POINTS",
     "points": 100
   }

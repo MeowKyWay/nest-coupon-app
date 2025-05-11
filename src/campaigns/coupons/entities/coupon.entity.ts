@@ -11,6 +11,7 @@ export enum CouponStrategy {
 }
 
 export interface CouponJson {
+  id: string;
   code: string;
   strategy: CouponStrategy;
   amount: number;
@@ -19,8 +20,8 @@ export interface CouponJson {
 export abstract class Coupon extends Campaign {
   public readonly code: string;
 
-  constructor(name: string, code: string) {
-    super(name);
+  constructor(name: string, id: string, code: string) {
+    super(name, id);
     this.code = code;
   }
 
@@ -39,12 +40,20 @@ export abstract class Coupon extends Campaign {
 export class PercentageCoupon extends Coupon {
   public readonly amount: number;
 
-  constructor({ code, amount }: { code: string; amount?: number }) {
+  constructor({
+    code,
+    id,
+    amount,
+  }: {
+    code: string;
+    id: string;
+    amount?: number;
+  }) {
     amount = amount ?? 0;
     if (amount <= 0 || amount > 100) {
       throw new Error('Amount must be between 0 and 100');
     }
-    super('Percentage discount', code);
+    super('Percentage discount', id, code);
     this.amount = amount;
   }
 
@@ -77,12 +86,20 @@ export class PercentageCoupon extends Coupon {
 export class FixedAmountCoupon extends Coupon {
   public readonly amount: number;
 
-  constructor({ code, amount }: { code: string; amount?: number }) {
+  constructor({
+    code,
+    id,
+    amount,
+  }: {
+    code: string;
+    id: string;
+    amount?: number;
+  }) {
     amount = amount ?? 0;
     if (amount <= 0) {
       throw new Error('Amount must be greater than 0');
     }
-    super('Fixed amount', code);
+    super('Fixed amount', id, code);
     this.amount = amount ?? 0;
   }
 
