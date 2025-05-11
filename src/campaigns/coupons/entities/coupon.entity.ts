@@ -1,4 +1,7 @@
-import { DiscountCampaign } from 'src/discount/discount-campaign';
+import {
+  applyProportionalDiscount,
+  DiscountCampaign,
+} from 'src/campaigns/discount-campaign';
 import * as json from './coupons.json';
 import { Item } from 'src/items/entities/item.entity';
 
@@ -14,14 +17,12 @@ export interface CouponJson {
 }
 
 export abstract class Coupon extends DiscountCampaign {
-  code: string;
+  public readonly code: string;
 
-  constructor(code: string) {
-    super();
+  constructor(name: string, code: string) {
+    super(name);
     this.code = code;
   }
-
-  abstract discount(items: Item[]): Item[];
 
   static fromJson(json: CouponJson): Coupon {
     console.log(json);
@@ -37,15 +38,14 @@ export abstract class Coupon extends DiscountCampaign {
 }
 
 export class PercentageCoupon extends Coupon {
-  name = 'Percentage discount';
-  private amount: number;
+  public readonly amount: number;
 
   constructor({ code, amount }: { code: string; amount?: number }) {
     amount = amount ?? 0;
     if (amount <= 0 || amount > 100) {
       throw new Error('Amount must be between 0 and 100');
     }
-    super(code);
+    super('Percentage discount', code);
     this.amount = amount;
   }
 
@@ -63,7 +63,7 @@ export class PercentageCoupon extends Coupon {
    * const discounted = coupon.discount(items);
    * // Each item will have a percentage discount applied, and the price will not go below zero.
    */
-  discount(items: Item[]): Item[] {
+  discount({ items }: { items: Item[] }): Item[] {
     return items.map((item) => {
       const discountAmount = (item.price * this.amount) / 100;
       const discountedPrice = item.price - discountAmount;
@@ -76,15 +76,14 @@ export class PercentageCoupon extends Coupon {
 }
 
 export class FixedAmountCoupon extends Coupon {
-  name = 'Fixed amount';
-  private amount: number;
+  public readonly amount: number;
 
   constructor({ code, amount }: { code: string; amount?: number }) {
     amount = amount ?? 0;
     if (amount <= 0) {
       throw new Error('Amount must be greater than 0');
     }
-    super(code);
+    super('Fixed amount', code);
     this.amount = amount ?? 0;
   }
 
@@ -100,21 +99,8 @@ export class FixedAmountCoupon extends Coupon {
    * const discounted = coupon.discount(items);
    * // Discounts are applied in proportion to item prices
    */
-  discount(items: Item[]): Item[] {
-    const totalPrice = items.reduce((acc, item) => acc + item.price, 0);
-
-    if (totalPrice <= 0) {
-      return items.map((item) => new Item({ ...item, price: 0 })); // Ensure all items are zero if total price is zero
-    }
-
-    return items.map((item) => {
-      const discountAmount = (item.price / totalPrice) * this.amount;
-      const discountedPrice = item.price - discountAmount;
-      return new Item({
-        ...item,
-        price: Math.max(discountedPrice, 0), // Ensure price does not go below zero
-      });
-    });
+  discount({ items }: { items: Item[] }): Item[] {
+    return applyProportionalDiscount(items, this.amount);
   }
 }
 

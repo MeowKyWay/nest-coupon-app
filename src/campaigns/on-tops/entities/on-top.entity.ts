@@ -1,4 +1,4 @@
-import { DiscountCampaign } from 'src/discount/discount-campaign';
+import { DiscountCampaign } from 'src/campaigns/discount-campaign';
 import * as json from './on-tops.json';
 import { Item, ItemCategory } from 'src/items/entities/item.entity';
 
@@ -7,21 +7,17 @@ export enum OnTopStrategy {
   POINTS = 'POINTS',
 }
 
-export interface OnTopJson extends DiscountCampaign {
-  id: number;
+export interface OnTopJson {
   strategy: OnTopStrategy;
   amount?: number;
   category?: ItemCategory;
+  points?: number;
 }
 
-export abstract class OnTop {
-  id: number;
-
-  constructor(id: number) {
-    this.id = id;
+export abstract class OnTop extends DiscountCampaign {
+  constructor(name: string) {
+    super(name);
   }
-
-  abstract discount(items: Item[], point: number): Item[];
 
   static fromJson(json: OnTopJson): OnTop {
     console.log(json);
@@ -37,16 +33,13 @@ export abstract class OnTop {
 }
 
 export class CategoryPercentageOnTop extends OnTop {
-  name = 'Percentage discount by item category';
-  private amount: number;
-  private category: ItemCategory;
+  public readonly amount: number;
+  public readonly category: ItemCategory;
 
   constructor({
-    id,
     amount,
     category,
   }: {
-    id: number;
     amount?: number;
     category?: ItemCategory;
   }) {
@@ -57,7 +50,7 @@ export class CategoryPercentageOnTop extends OnTop {
     if (!category) {
       throw new Error('Category is required');
     }
-    super(id);
+    super('Percentage discount by item category');
     this.amount = amount;
   }
 
@@ -68,7 +61,7 @@ export class CategoryPercentageOnTop extends OnTop {
    * @param items - The list of items to apply the discount to.
    * @returns A new list of items with updated (discounted) prices.
    */
-  discount(items: Item[]): Item[] {
+  discount({ items }: { items: Item[] }): Item[] {
     return items.map((item) => {
       if (item.category === this.category) {
         const discountAmount = (item.price * this.amount) / 100;
@@ -84,9 +77,15 @@ export class CategoryPercentageOnTop extends OnTop {
 }
 
 export class PointsOnTop extends OnTop {
-  name = 'Discount by points';
-  constructor({ id }: { id: number }) {
-    super(id);
+  public readonly point: number;
+
+  constructor({ points }: { points?: number }) {
+    points = points ?? 0;
+    super('Discount by points');
+    if (points <= 0) {
+      throw new Error('Point must be greater than 0');
+    }
+    this.point = points;
   }
 
   /**
@@ -97,19 +96,21 @@ export class PointsOnTop extends OnTop {
    * @param point - The total discount amount to be distributed.
    * @returns A new list of items with updated prices.
    */
-  discount(items: Item[], point: number): Item[] {
+  discount({ items, point }: { items: Item[]; point: number }): Item[] {
     if (point <= 0) {
       return items.map((item) => new Item({ ...item })); // No discount applied
     }
 
     const totalPrice = items.reduce((acc, item) => acc + item.price, 0);
 
+    const cappedPoint = Math.min(totalPrice * 0.2, point); // Cap the discount to 20% of total price
+
     if (totalPrice <= 0) {
       return items.map((item) => new Item({ ...item, price: 0 })); // Ensure all items are zero if total price is zero
     }
 
     return items.map((item) => {
-      const discountAmount = (item.price / totalPrice) * point;
+      const discountAmount = (item.price / totalPrice) * cappedPoint;
       const discountedPrice = item.price - discountAmount;
       return new Item({
         ...item,
