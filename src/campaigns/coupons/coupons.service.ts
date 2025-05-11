@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { coupons } from './entities/coupon.entity';
 
 @Injectable()
@@ -7,7 +7,11 @@ export class CouponsService {
     return coupons;
   }
 
-  findOne(id: string) {
-    return coupons.find((coupon) => coupon.id === id);
+  findOne(code: string) {
+    const coupon = coupons.find((coupon) => coupon.code === code);
+    if (!coupon) {
+      throw new NotFoundException(`Coupon with code ${code} not found`);
+    }
+    return coupon;
   }
 }

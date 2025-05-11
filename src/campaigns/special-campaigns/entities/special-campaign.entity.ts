@@ -1,6 +1,6 @@
 import * as json from './special-campaigns.json';
 
-import { applyProportionalDiscount, Campaign } from 'src/campaigns/campaign';
+import { applyProportionalDiscount, Campaign } from 'src/campaigns/entities/campaign';
 import { Item } from 'src/items/entities/item.entity';
 
 export interface SpecialCampaignJson {

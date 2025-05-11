@@ -1,4 +1,7 @@
-import { applyProportionalDiscount, Campaign } from 'src/campaigns/campaign';
+import {
+  applyProportionalDiscount,
+  Campaign,
+} from 'src/campaigns/entities/campaign';
 import * as json from './coupons.json';
 import { Item } from 'src/items/entities/item.entity';
 

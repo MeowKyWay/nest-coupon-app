@@ -1,4 +1,4 @@
-import { ArrayNotEmpty, IsArray, IsString } from 'class-validator';
+import { ArrayNotEmpty, IsArray, IsOptional, IsString } from 'class-validator';
 
 export class CheckoutDto {
   @IsArray()
@@ -6,7 +6,15 @@ export class CheckoutDto {
   @IsString({ each: true })
   items: string[];
 
-  @IsArray()
-  @IsString({ each: true })
-  campaigns: string[];
+  @IsString()
+  @IsOptional()
+  coupon?: string;
+
+  @IsString()
+  @IsOptional()
+  onTop?: string;
+
+  @IsString()
+  @IsOptional()
+  specialCampaign?: string;
 }

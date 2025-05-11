@@ -1,8 +1,13 @@
 export class CheckoutResponseDto {
-  items: Array<{
-    productId: string;
+  itemsBeforeDiscount: Array<{
+    name: string;
+    price: number;
+  }>;
+  totalPriceBeforeDiscount: number;
+  itemsAfterDiscount: Array<{
+    name: string;
     price: number;
   }>;
   totalDiscount: number;
-  totalPrice: number;
+  totalPriceAfterDiscount: number;
 }

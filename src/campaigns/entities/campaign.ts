@@ -21,13 +21,7 @@ export abstract class Campaign {
    *
    * @warning This method should not modify the original items array.
    */
-  abstract discount({
-    items,
-    point,
-  }: {
-    items: Item[];
-    point?: number;
-  }): Item[];
+  abstract discount({ items }: { items: Item[] }): Item[];
 }
 
 export function applyProportionalDiscount(

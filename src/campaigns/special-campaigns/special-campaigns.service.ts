@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { specialCampaigns } from './entities/special-campaign.entity';
 
 @Injectable()
@@ -8,8 +8,12 @@ export class SpecialCampaignsService {
   }
 
   findOne(id: string) {
-    return specialCampaigns.find(
+    const specialCampaign = specialCampaigns.find(
       (specialCampaign) => specialCampaign.id === id,
     );
+    if (!specialCampaign) {
+      throw new NotFoundException(`Special Campaign with ID ${id} not found`);
+    }
+    return specialCampaign;
   }
 }

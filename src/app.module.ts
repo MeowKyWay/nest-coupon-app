@@ -6,6 +6,7 @@ import { OnTopsModule } from './campaigns/on-tops/on-tops.module';
 import { CouponsModule } from './campaigns/coupons/coupons.module';
 import { SpecialCampaignsModule } from './campaigns/special-campaigns/special-campaigns.module';
 import { CheckoutModule } from './checkout/checkout.module';
+import { CampaignsModule } from './campaigns/campaigns.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { CheckoutModule } from './checkout/checkout.module';
     OnTopsModule,
     SpecialCampaignsModule,
     CheckoutModule,
+    CampaignsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { onTops } from './entities/on-top.entity';
 
 @Injectable()
@@ -8,6 +8,10 @@ export class OnTopsService {
   }
 
   findOne(id: string) {
-    return onTops.find((onTop) => onTop.id === id);
+    const onTop = onTops.find((onTop) => onTop.id === id);
+    if (!onTop) {
+      throw new NotFoundException(`OnTop with ID ${id} not found`);
+    }
+    return onTop;
   }
 }

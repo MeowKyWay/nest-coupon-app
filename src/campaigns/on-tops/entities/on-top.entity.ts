@@ -1,4 +1,4 @@
-import { Campaign } from 'src/campaigns/campaign';
+import { Campaign } from 'src/campaigns/entities/campaign';
 import * as json from './on-tops.json';
 import { Item, ItemCategory } from 'src/items/entities/item.entity';
 
@@ -51,6 +51,7 @@ export class CategoryPercentageOnTop extends OnTop {
     }
     super('Percentage discount by item category');
     this.amount = amount;
+    this.category = category;
   }
 
   /**
@@ -61,6 +62,9 @@ export class CategoryPercentageOnTop extends OnTop {
    * @returns A new list of items with updated (discounted) prices.
    */
   discount({ items }: { items: Item[] }): Item[] {
+    console.log(
+      `Applying ${this.amount}% discount on items in category ${this.category}`,
+    );
     return items.map((item) => {
       if (item.category === this.category) {
         const discountAmount = (item.price * this.amount) / 100;
@@ -96,6 +100,7 @@ export class PointsOnTop extends OnTop {
    * @returns A new list of items with updated prices.
    */
   discount({ items, point }: { items: Item[]; point: number }): Item[] {
+    console.log(`Applying point discount of ${point} to items`);
     if (point <= 0) {
       return items.map((item) => new Item({ ...item })); // No discount applied
     }
