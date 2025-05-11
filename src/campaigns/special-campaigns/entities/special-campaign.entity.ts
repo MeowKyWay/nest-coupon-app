@@ -1,7 +1,4 @@
-import {
-  applyProportionalDiscount,
-  DiscountCampaign,
-} from 'src/campaigns/discount-campaign';
+import { applyProportionalDiscount, Campaign } from 'src/campaigns/campaign';
 import { Item } from 'src/items/entities/item.entity';
 
 export interface SpecialCampaignJson {
@@ -9,7 +6,7 @@ export interface SpecialCampaignJson {
   amount: number;
 }
 
-export class SpecialCampaign extends DiscountCampaign {
+export class SpecialCampaign extends Campaign {
   public readonly every: number;
   public readonly amount: number;
 

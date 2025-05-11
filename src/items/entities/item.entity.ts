@@ -2,25 +2,27 @@ import * as json from './items.json';
 
 export enum ItemCategory {
   CLOTHING = 'CLOTHING',
-  FOOD = 'FOOD',
-  FURNITURE = 'FURNITURE',
+  ASSESSORIES = 'ACCESSORIES',
+  ELECTRONICS = 'ELECTRONICS',
 }
 
 export interface ItemJson {
-  id: number;
   name: string;
   price: number;
   category: ItemCategory;
 }
 
 export class Item {
-  id: number;
+  id: string;
   name: string;
   price: number;
   category: ItemCategory;
 
-  constructor({ id, name, price, category }: ItemJson) {
-    this.id = id;
+  static nextId = 1;
+
+  constructor({ name, price, category }: ItemJson) {
+    this.id = Item.nextId.toString();
+    Item.nextId += 1;
     this.name = name;
     this.price = price;
     this.category = category;

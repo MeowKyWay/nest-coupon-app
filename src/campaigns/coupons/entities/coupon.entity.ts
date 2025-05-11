@@ -1,7 +1,4 @@
-import {
-  applyProportionalDiscount,
-  DiscountCampaign,
-} from 'src/campaigns/discount-campaign';
+import { applyProportionalDiscount, Campaign } from 'src/campaigns/campaign';
 import * as json from './coupons.json';
 import { Item } from 'src/items/entities/item.entity';
 
@@ -16,7 +13,7 @@ export interface CouponJson {
   amount: number;
 }
 
-export abstract class Coupon extends DiscountCampaign {
+export abstract class Coupon extends Campaign {
   public readonly code: string;
 
   constructor(name: string, code: string) {
@@ -25,7 +22,6 @@ export abstract class Coupon extends DiscountCampaign {
   }
 
   static fromJson(json: CouponJson): Coupon {
-    console.log(json);
     switch (json.strategy) {
       case CouponStrategy.FIXED:
         return new FixedAmountCoupon(json);

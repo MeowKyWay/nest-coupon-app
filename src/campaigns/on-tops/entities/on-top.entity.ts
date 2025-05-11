@@ -1,4 +1,4 @@
-import { DiscountCampaign } from 'src/campaigns/discount-campaign';
+import { Campaign } from 'src/campaigns/campaign';
 import * as json from './on-tops.json';
 import { Item, ItemCategory } from 'src/items/entities/item.entity';
 
@@ -14,13 +14,12 @@ export interface OnTopJson {
   points?: number;
 }
 
-export abstract class OnTop extends DiscountCampaign {
+export abstract class OnTop extends Campaign {
   constructor(name: string) {
     super(name);
   }
 
   static fromJson(json: OnTopJson): OnTop {
-    console.log(json);
     switch (json.strategy) {
       case OnTopStrategy.CATEGORY_PERCENTAGE:
         return new CategoryPercentageOnTop(json);

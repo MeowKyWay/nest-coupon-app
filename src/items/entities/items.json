@@ -1,38 +1,32 @@
 [
   {
-    "id": 1,
     "name": "Shirt",
     "price": 200,
     "category": "CLOTHING"
   },
   {
-    "id": 2,
     "name": "Pants",
     "price": 300,
     "category": "CLOTHING"
   },
   {
-    "id": 3,
-    "name": "Pizza",
-    "price": 100,
-    "category": "FOOD"
+    "name": "Ring",
+    "price": 1000,
+    "category": "ASSESSORIES"
   },
   {
-    "id": 4,
-    "name": "Steak",
-    "price": 150,
-    "category": "FOOD"
-  },
-  {
-    "id": 5,
-    "name": "Chair",
+    "name": "Earrings",
     "price": 500,
-    "category": "FURNITURE"
+    "category": "ASSESSORIES"
   },
   {
-    "id": 6,
-    "name": "Table",
-    "price": 700,
-    "category": "FURNITURE"
+    "name": "Laptop",
+    "price": 2000,
+    "category": "ELECTRONICS"
+  },
+  {
+    "name": "Phone",
+    "price": 999,
+    "category": "ELECTRONICS"
   }
 ]
