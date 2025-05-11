@@ -1,14 +1,14 @@
 [
   {
     "every": 300,
-    "discount": 40
+    "amount": 40
   },
   {
     "every": 200,
-    "discount": 25
+    "amount": 25
   },
   {
     "every": 100,
-    "discount": 10
+    "amount": 10
   }
 ]

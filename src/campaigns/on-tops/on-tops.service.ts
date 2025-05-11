@@ -6,4 +6,8 @@ export class OnTopsService {
   findAll() {
     return onTops;
   }
+
+  findOne(id: string) {
+    return onTops.find((onTop) => onTop.id === id);
+  }
 }

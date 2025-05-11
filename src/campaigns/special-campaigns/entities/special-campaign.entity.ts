@@ -1,3 +1,5 @@
+import * as json from './special-campaigns.json';
+
 import { applyProportionalDiscount, Campaign } from 'src/campaigns/campaign';
 import { Item } from 'src/items/entities/item.entity';
 
@@ -29,3 +31,8 @@ export class SpecialCampaign extends Campaign {
     return applyProportionalDiscount(items, discountAmount);
   }
 }
+
+export const specialCampaigns: SpecialCampaign[] = json.map(
+  (specialCampaignJson: SpecialCampaignJson) =>
+    new SpecialCampaign(specialCampaignJson),
+);
