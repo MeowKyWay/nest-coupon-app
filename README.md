@@ -58,7 +58,7 @@ Request Body:
 }
 ```
 
-You can import [`Checkout.postman_collection.json`](./Checkout.postman_collection.json) into Postman to test the API easily.
+You can import [`Checkout.postman_collection.json`](./coupon-app.postman_collection.json) into Postman to test the API easily.
 
 ### Data Sources
 • Items: /src/items/entities/items.json  
