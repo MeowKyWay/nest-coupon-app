@@ -1,5 +1,7 @@
 # Checkout Service (NestJS)
 
+develope by **Kan sriprapai**
+
 This is a **NestJS**-based checkout service that supports multiple promotional campaigns including coupons, on-top promotions, and special campaigns.
 
 ## Features
